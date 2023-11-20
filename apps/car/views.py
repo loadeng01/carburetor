@@ -41,6 +41,8 @@ class CarViewSet(ModelViewSet):
     def get_permissions(self):
         if self.request.method in ('PUT', 'PATCH', 'DELETE'):
             return IsAuthorOrAdminOrEmployee(),
+        elif self.request.method == 'POST':
+            return permissions.IsAuthenticated(),
         return permissions.AllowAny(),
 
     @action(['POST', 'DELETE', 'GET'], detail=True)
