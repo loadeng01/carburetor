@@ -85,7 +85,7 @@ class UserViewSet(ModelViewSet):
     pagination_class = Pagination
     serializer_class = UserSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
-    search_fields = ('email', )
+    search_fields = ('email', 'username')
     filterset_fields = ('is_staff', 'is_superuser', 'is_active', 'is_phone_active')
 
 
