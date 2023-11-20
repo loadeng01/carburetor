@@ -9,6 +9,8 @@ from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .tasks import send_confirmation_email, send_activation_sms
 from apps.car.permissions import IsAdminOrEmployee
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 User = get_user_model()
 
@@ -75,6 +77,9 @@ class UserViewSet(ModelViewSet):
     permission_classes = IsAdminOrEmployee,
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = (SearchFilter, DjangoFilterBackend)
+    search_fields = ('email', 'username')
+    filterset_fields = ('is_staff', 'is_superuser', 'is_active', 'is_phone_active')
 
     def list(self, request, *args, **kwargs):
         users = User.objects.all()
