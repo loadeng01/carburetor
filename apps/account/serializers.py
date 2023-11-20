@@ -31,6 +31,25 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+class RegisterEmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'phone_number', 'password')
+
+    def create(self, validated_data):
+        user = User.objects.create_employee(**validated_data)
+        return user
+
+    def to_representation(self, instance):
+        repr = super().to_representation(instance)
+        data = {
+            'username': repr['username'],
+            'email': repr['email'],
+            'phone_number': repr['phone_number']
+        }
+        return data
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

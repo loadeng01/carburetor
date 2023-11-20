@@ -2,7 +2,7 @@ from rest_framework.decorators import action
 from rest_framework import permissions
 from .models import Car
 from .serializers import *
-from .permissions import IsAuthorOrAdmin
+from .permissions import IsAuthorOrAdminOrEmployee
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -39,10 +39,8 @@ class CarViewSet(ModelViewSet):
         return CarSerializer
 
     def get_permissions(self):
-        if self.request.method == 'DELETE':
-            return IsAuthorOrAdmin(),
-        elif self.request.method in ('PUT', 'PATCH'):
-            return IsAuthorOrAdmin(),
+        if self.request.method in ('PUT', 'PATCH', 'DELETE'):
+            return IsAuthorOrAdminOrEmployee(),
         return permissions.AllowAny(),
 
     @action(['POST', 'DELETE', 'GET'], detail=True)

@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from .models import Category
 from .serializers import CategorySerializer
 from rest_framework import permissions
+from apps.car.permissions import IsAdminOrEmployee
 
 
 class CategoryViewSet(ModelViewSet):
@@ -11,5 +12,5 @@ class CategoryViewSet(ModelViewSet):
     def get_permissions(self):
         if self.action in ('list', 'retrieve'):
             permissions.AllowAny(),
-        return permissions.IsAdminUser(),
+        return IsAdminOrEmployee(),
 

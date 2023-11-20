@@ -29,6 +29,12 @@ class UserManager(BaseUserManager):
         kwargs.setdefault('is_phone_active', True)
         return self._create_user(email, password, **kwargs)
 
+    def create_employee(self, email, password, **kwargs):
+        kwargs.setdefault('is_staff', True)
+        kwargs.setdefault('is_active', True)
+        kwargs.setdefault('is_phone_active', True)
+        return self._create_user(email, password, **kwargs)
+
 
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=100, blank=True)
