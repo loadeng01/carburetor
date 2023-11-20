@@ -8,3 +8,5 @@ drf-yasg
 django-filter
 celery
 twilio
+redis
+gunicorn
