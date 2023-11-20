@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
@@ -73,18 +74,19 @@ class ActivationPhoneView(APIView):
         return Response('Successfully activated', status=200)
 
 
+class Pagination(PageNumberPagination):
+    page_size = 3
+    page_query_param = 'page'
+
+
 class UserViewSet(ModelViewSet):
     permission_classes = IsAdminOrEmployee,
     queryset = User.objects.all()
+    pagination_class = Pagination
     serializer_class = UserSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
-    search_fields = ('email', 'username')
+    search_fields = ('email', )
     filterset_fields = ('is_staff', 'is_superuser', 'is_active', 'is_phone_active')
-
-    def list(self, request, *args, **kwargs):
-        users = User.objects.all()
-        serializer = UserListSerializer(users, many=True)
-        return Response(serializer.data, status=200)
 
 
 
