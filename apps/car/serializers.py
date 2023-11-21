@@ -28,8 +28,7 @@ class CarSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
-        user = self.context['request'].user
-        repr['owner_phone_number'] = user.phone_number
+        repr['owner_phone_number'] = repr.get('owner.phone_number')
         return repr
 
 

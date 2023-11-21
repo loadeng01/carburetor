@@ -23,16 +23,6 @@ class Pagination(PageNumberPagination):
     page_query_param = 'page'
 
 
-class CarListView(generics.ListAPIView):
-    queryset = Car.objects.all()
-    permission_classes = permissions.AllowAny,
-    serializer_class = CarListSerializer
-    pagination_class = Pagination
-    filter_backends = (DjangoFilterBackend, SearchFilter)
-    search_fields = ('title',)
-    filterset_fields = ('category', 'year')
-
-
 class CarViewSet(ModelViewSet):
     queryset = Car.objects.all()
     pagination_class = Pagination
