@@ -40,8 +40,11 @@ class CarListSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
+        idc = repr['id']
+        # link = f'http://localhost:8000/api/cars/{idc}/'
+        link = f'http://16.170.220.27/api/cars/{idc}/'
         data = {
-            'id': repr['id'],
+            'link': link,
             'preview': repr['preview'],
             'title': repr['title'],
             'year': repr['year'],

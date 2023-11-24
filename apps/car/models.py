@@ -34,7 +34,6 @@ class Car(models.Model):
 
 
 class CarImages(models.Model):
-    title = models.CharField(max_length=100, blank=True)
     image = models.ImageField(upload_to='images/')
     car = models.ForeignKey(Car, related_name='images', on_delete=models.CASCADE)
 
